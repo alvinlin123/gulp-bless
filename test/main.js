@@ -236,6 +236,15 @@ describe('gulp-bless', function() {
             });
         });
 
+        it('should throw error if suffix option is neither string nor function', function(done){ 
+
+            (function callBlessWithInvalidSuffix() {
+                gulp.src('./test/css/long.css')
+                    .pipe(bless({suffix:{}}))
+            }).should.throw(/.*suffix.*string.*function.*/);
+            done();
+        });
+
         it('should apply sourcemaps', function(done){
             var expectedSplits = [
                 new File({

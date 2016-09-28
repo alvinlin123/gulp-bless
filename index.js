@@ -17,10 +17,12 @@ var createSuffixFunctionFromString = function(configValue) {
     }
 }
 var createSuffixFunction = function(configValue) {
-    if(_.isFunction(configValue)) {
+    if(_.isString(configValue) || _.isUndefined(configValue)) {
+        return createSuffixFunctionFromString(configValue);
+    } else if(_.isFunction(configValue)) {
         return configValue;
     } else {
-        return createSuffixFunctionFromString(configValue);
+        throw new TypeError("suffix is neither a string nor function");
     }
 }
 
