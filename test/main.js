@@ -138,10 +138,10 @@ describe('gulp-bless', function() {
             });
         });
 
-        it('should use custom part label if partLabel option is set', function(done){
-            var partLabel = "-part"
+        it('should use custom suffix if suffix option is set', function(done){
+            var suffix = "-part"
             var stream = bless({
-                partLabel: partLabel
+                suffix: suffix
             });
 
             fs.readFile('./test/css/long.css', function(err, data){
@@ -175,8 +175,8 @@ describe('gulp-bless', function() {
                     });
                     should.exist(masterPart);
                     should.exist(subPart);
-                    path.basename(subPart.path).should.equal("long-split" + partLabel + "1.css");
-                    var importRegex = "@import url\\('long-split" + partLabel  + "1.css\\?z=[0-9]+'\\);";
+                    path.basename(subPart.path).should.equal("long-split" + suffix + "1.css");
+                    var importRegex = "@import url\\('long-split" + suffix  + "1.css\\?z=[0-9]+'\\);";
                     masterPart.contents.toString("utf8").should.match(new RegExp(importRegex));
                     done();
                 });

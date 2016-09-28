@@ -9,13 +9,22 @@ var applySourcemap  = require('vinyl-sourcemaps-apply');
 
 var File = gutil.File;
 var PluginError = gutil.PluginError;
+var createSuffixFunctionFromString = function(configValue) {
+    var actualSufix = configValue === undefined? "-blessed" : configValue;
+    return function(index) {
+        return actualSufix + index;
+    }
+}
+var createSuffixFunction = function(configValue) {
+    return createSuffixFunctionFromString(configValue);
+}
 
 module.exports = function(options){
     var pluginName = 'gulp-bless';
     options = options || {};
     options.imports = options.imports === undefined ? true : options.imports;
     options.cacheBuster = options.cacheBuster === undefined ? true : options.cacheBuster;
-    options.partLabel = options.partLabel === undefined ? "-blessed" : options.partLabel;
+    options.suffix = createSuffixFunction(options.suffix);
 
     return through.obj(function(file, enc, cb) {
         if (file.isNull()) return cb(null, file); // ignore
@@ -82,7 +91,7 @@ module.exports = function(options){
             var outputBasename = path.basename(outputFilePath, outputExtension);
 
             var createBlessedFileName = function(index){
-                return outputBasename + options.partLabel + index + outputExtension;
+                return outputBasename + options.suffix(index) + outputExtension;
             };
 
             var addImports = function(index, contents){
