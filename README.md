@@ -41,7 +41,8 @@ gulp.task('watch', function () {
 - `imports` - A boolean (which defaults to `true`). Determines whether or not the first chunk / "blessed" file `@import`s the others.
 - `cacheBuster` - A boolean (which defaults to `true`). If `imports` is `true`, this will add a random query parameter value to prevent against aggressive caching.
 - `log` - A boolean (which defaults to `false`). Logs a small bit of information about the process.
-- `partLabel` - A string (which defaults to `-blessed`). The label to used for splitted out part files. For example, with default the file name will be "long-blessed1.css"; with value of `part`, the file name will be "long-part1.css".
+- `suffix` - Either a string or a function (which defaults to `"-blessed"`). If it is a string, then it will be added after the original file name but before the index (e.g. `mycss-blessed1.css`). If it is a function, the function is expected to take in an 
+`index` argument (1-based) and return a string; whatever returned by the function will be appened to the original file name.
 
 Example:
 

@@ -1,5 +1,6 @@
 'use strict';
 
+var _               = require("lodash");
 var through         = require('through2');
 var path            = require('path');
 var bless           = require('bless');
@@ -10,13 +11,17 @@ var applySourcemap  = require('vinyl-sourcemaps-apply');
 var File = gutil.File;
 var PluginError = gutil.PluginError;
 var createSuffixFunctionFromString = function(configValue) {
-    var actualSufix = configValue === undefined? "-blessed" : configValue;
+    var actualSuffix = configValue === undefined? "-blessed" : configValue;
     return function(index) {
-        return actualSufix + index;
+        return actualSuffix + index;
     }
 }
 var createSuffixFunction = function(configValue) {
-    return createSuffixFunctionFromString(configValue);
+    if(_.isFunction(configValue)) {
+        return configValue;
+    } else {
+        return createSuffixFunctionFromString(configValue);
+    }
 }
 
 module.exports = function(options){
