@@ -1,6 +1,8 @@
 'use strict';
 
-var _               = require("lodash");
+var isString        = require("lodash.isstring");
+var isFunction      = require("lodash.isfunction");
+var isUndefined     = require("lodash.isundefined");
 var through         = require('through2');
 var path            = require('path');
 var bless           = require('bless');
@@ -17,9 +19,9 @@ var createSuffixFunctionFromString = function(configValue) {
     }
 }
 var createSuffixFunction = function(configValue) {
-    if(_.isString(configValue) || _.isUndefined(configValue)) {
+    if(isString(configValue) || isUndefined(configValue)) {
         return createSuffixFunctionFromString(configValue);
-    } else if(_.isFunction(configValue)) {
+    } else if(isFunction(configValue)) {
         return configValue;
     } else {
         throw new TypeError("suffix is neither a string nor function");
