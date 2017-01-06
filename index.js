@@ -91,7 +91,7 @@ module.exports = function(options){
                     base: file.base,
                     path: outputFilePath,
                     contents: new Buffer(result.data[0])
-                }, 0)));
+                }), 0));
             }
 
 
