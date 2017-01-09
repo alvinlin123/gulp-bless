@@ -77,6 +77,7 @@ module.exports = function(options){
 
                 var map = result.maps[blessOutputIndex];
                 map.file = fileToAddTo.relative;
+                map.sources = [file.relative];
                 applySourcemap(fileToAddTo, map);
 
                 return fileToAddTo;
